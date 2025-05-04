@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>حساب العمر للمشاهير</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    header {
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: #ffd700;
+    }
+    header p {
+      font-size: 1.2rem;
+      color: #ccc;
+    }
+    .card {
+      background-color: #1e1e2f;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      padding: 2rem;
+      max-width: 600px;
+      width: 90%;
+      margin: 1rem 0;
+    }
+    label, input {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    input {
+      padding: 0.7rem;
+      border-radius: 10px;
+      border: none;
+    }
+    button {
+      background-color: #ffd700;
+      color: #000;
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #e6c200;
+    }
+    .result {
+      margin-top: 1rem;
+      line-height: 1.8;
+      color: #fff;
+    }
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 1rem;
+      color: #888;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>موقع حساب العمر للمشاهير</h1>
+    <p>افضل موقع عربي يقدم خدمة حساب العمر بكل دقة - صُمِمَ بحب من أجلكم</p>
+  </header>
+  <div class="card">
+    <label>يوم الميلاد</label>
+    <input type="number" id="day" placeholder="مثال: 24">
+    <label>شهر الميلاد</label>
+    <input type="number" id="month" placeholder="مثال: 5">
+    <label>سنة الميلاد</label>
+    <input type="number" id="year" placeholder="مثال: 2007">
+    <button onclick="calculateAge()">احسب عمري الآن</button>
+    <div class="result" id="result"></div>
+  </div>
+  <footer>
+    &copy; 2025 - تم التطوير بواسطة المزعج الحاكم | نسخة المشاهير
+  </footer>  <script>
+    function calculateAge() {
+      const day = parseInt(document.getElementById("day").value);
+      const month = parseInt(document.getElementById("month").value) - 1;
+      const year = parseInt(document.getElementById("year").value);
+
+      const birthDate = new Date(year, month, day);
+      const now = new Date();
+      const diff = now - birthDate;
+
+      const ageDate = new Date(diff);
+      const ageYears = ageDate.getUTCFullYear() - 1970;
+      const ageMonths = ageDate.getUTCMonth();
+      const ageDays = ageDate.getUTCDate() - 1;
+
+      const hijriAgeYears = Math.floor(diff / (1000 * 60 * 60 * 24 * 354.36));
+      const hijriRemainderDays = Math.floor(diff / (1000 * 60 * 60 * 24)) % 354;
+
+      const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const totalHours = Math.floor(diff / (1000 * 60 * 60));
+
+      const weekDays = ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
+      const bornDay = weekDays[birthDate.getDay()];
+
+      const zodiacSigns = [
+        "الجدي", "الدلو", "الحوت", "الحمل", "الثور", "الجوزاء", "السرطان",
+        "الأسد", "العذراء", "الميزان", "العقرب", "القوس"
+      ];
+      const zodiacDates = [20, 19, 20, 20, 21, 21, 23, 23, 23, 23, 22, 22];
+      const zodiac = month === 0 && day < 20 ? "الجدي" : day < zodiacDates[month] ? zodiacSigns[month] : zodiacSigns[(month + 1) % 12];
+
+      const result = `
+        <h3>العمر بالميلادي</h3>
+        ${ageYears} سنة و ${ageMonths} شهر و ${ageDays} يوم<br>
+        <h3>العمر بالهجري</h3>
+        ${hijriAgeYears} سنة و ${hijriRemainderDays} يوم<br>
+        <h3>معلومات إضافية</h3>
+        لقد وُلدت يوم: ${bornDay}<br>
+        برجك: ${zodiac}<br>
+        عمرك بالأيام: ${totalDays} يوم<br>
+        عمرك بالساعات: حوالي ${totalHours} ساعة
+      `;
+      document.getElementById("result").innerHTML = result;
+    }
+  </script></body>
+</html>
