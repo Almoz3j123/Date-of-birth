@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -66,6 +67,11 @@
       line-height: 1.8;
       color: #fff;
     }
+    .counter {
+      margin-top: 1rem;
+      font-size: 1rem;
+      color: #ccc;
+    }
     footer {
       margin-top: auto;
       text-align: center;
@@ -79,7 +85,9 @@
   <header>
     <h1>موقع حساب العمر للمشاهير</h1>
     <p>افضل موقع عربي يقدم خدمة حساب العمر بكل دقة - صُمِمَ بحب من أجلكم</p>
+    <div class="counter">عدد الزيارات: <span id="visit-count">جارٍ الحساب...</span></div>
   </header>
+
   <div class="card">
     <label>يوم الميلاد</label>
     <input type="number" id="day" placeholder="مثال: 24">
@@ -90,9 +98,19 @@
     <button onclick="calculateAge()">احسب عمري الآن</button>
     <div class="result" id="result"></div>
   </div>
+
   <footer>
     &copy; 2025 - تم التطوير بواسطة المزعج الحاكم | نسخة المشاهير
-  </footer>  <script>
+  </footer>
+
+  <script>
+    // حساب عدد الزيارات من CountAPI
+    fetch('https://api.countapi.xyz/hit/almoz3j123.github.io/Date-of-birth')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('visit-count').innerText = data.value;
+      });
+
     function calculateAge() {
       const day = parseInt(document.getElementById("day").value);
       const month = parseInt(document.getElementById("month").value) - 1;
@@ -136,5 +154,6 @@
       `;
       document.getElementById("result").innerHTML = result;
     }
-  </script></body>
+  </script>
+</body>
 </html>
